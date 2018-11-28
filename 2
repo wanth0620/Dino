@@ -1,0 +1,40 @@
+from time import sleep
+import pyautogui
+import snp
+from PIL import ImageOps
+import numpy as np
+import pyscreenshot as ImageGrab
+
+box=(800, 520, 890, 535)
+'''
+while 1:
+    x , y = pyautogui.position()
+
+    print x , y
+'''
+p = snp.locateOnScreen("/home/wan/Desktop/pythonHW/chrome.png")
+
+if p == None:
+    print("Do not find Chrome")
+else :
+    pyautogui.click(p[0]+p[2]//2,p[1]+p[3]//2)
+
+
+dino = snp.locateOnScreen("/home/wan/Desktop/pythonHW/dino.png")
+if dino !=None:
+    print p
+
+
+image=ImageGrab.grab(box)
+jump_box=ImageOps.grayscale(image)
+jump_box=np.array(jump_box.getcolors())
+white=jump_box.sum()
+while True:
+    image=ImageGrab.grab(box)
+    jump_box=ImageOps.grayscale(image)
+    jump_box=np.array(jump_box.getcolors())
+    if jump_box.sum() != white:
+        pyautogui.press('space')
+        sleep(0.1)
+        pyautogui.press('down')
+        
